@@ -21,7 +21,11 @@
 		"rules": {
 			"recommended": true,
 			"style": {
-				"noUnusedTemplateLiteral": "off"
+				"noUnusedTemplateLiteral": "off",
+				"useImportType": "off"
+			},
+			"suspicious": {
+				"noExplicitAny": "info"
 			}
 		}
 	},
