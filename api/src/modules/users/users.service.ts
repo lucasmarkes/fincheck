@@ -1,17 +1,18 @@
 import { ConflictException, Injectable } from "@nestjs/common";
 import { hash } from "bcryptjs";
-import { PrismaService } from "src/shared/database/prisma.service";
+import { UsersRepository } from "./../../shared/database/repositories/users.repositories";
 import { CreateUserDto } from "./dto/create-user.dto";
 
 @Injectable()
 export class UsersService {
-	constructor(private readonly prismaService: PrismaService) {}
+	constructor(private readonly usersRepo: UsersRepository) {}
 
 	async create(createUserDto: CreateUserDto) {
 		const { email, name, password } = createUserDto;
 
-		const emailExists = await this.prismaService.user.findUnique({
+		const emailExists = await this.usersRepo.findUnique({
 			where: { email },
+			select: { id: true },
 		});
 
 		if (emailExists) {
@@ -20,7 +21,7 @@ export class UsersService {
 
 		const hashedPassword = await hash(password, 10);
 
-		const user = await this.prismaService.user.create({
+		const user = await this.usersRepo.create({
 			data: {
 				email,
 				name,
