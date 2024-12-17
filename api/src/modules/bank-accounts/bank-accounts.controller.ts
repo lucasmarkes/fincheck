@@ -1,34 +1,49 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { BankAccountsService } from './bank-accounts.service';
-import { CreateBankAccountDto } from './dto/create-bank-account.dto';
-import { UpdateBankAccountDto } from './dto/update-bank-account.dto';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Put,
+} from "@nestjs/common";
+import { ActiveUserId } from "src/shared/decorators/ActiveUserId";
+import { BankAccountsService } from "./bank-accounts.service";
+import { CreateBankAccountDto } from "./dto/create-bank-account.dto";
+import { UpdateBankAccountDto } from "./dto/update-bank-account.dto";
 
-@Controller('bank-accounts')
+@Controller("bank-accounts")
 export class BankAccountsController {
-  constructor(private readonly bankAccountsService: BankAccountsService) {}
+	constructor(private readonly bankAccountsService: BankAccountsService) {}
 
-  @Post()
-  create(@Body() createBankAccountDto: CreateBankAccountDto) {
-    return this.bankAccountsService.create(createBankAccountDto);
-  }
+	@Post()
+	create(
+		@Body() createBankAccountDto: CreateBankAccountDto,
+		@ActiveUserId() userId: string,
+	) {
+		return this.bankAccountsService.create(userId, createBankAccountDto);
+	}
 
-  @Get()
-  findAll() {
-    return this.bankAccountsService.findAll();
-  }
+	@Get()
+	findAll(@ActiveUserId() userId: string) {
+		return this.bankAccountsService.findAllByUserId(userId);
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bankAccountsService.findOne(+id);
-  }
+	@Get(":id")
+	findOne(@Param("id") id: string) {
+		return this.bankAccountsService.findOne(+id);
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBankAccountDto: UpdateBankAccountDto) {
-    return this.bankAccountsService.update(+id, updateBankAccountDto);
-  }
+	@Put(":id")
+	update(
+		@Param("id") id: string,
+		@Body() updateBankAccountDto: UpdateBankAccountDto,
+	) {
+		return this.bankAccountsService.update(+id, updateBankAccountDto);
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.bankAccountsService.remove(+id);
-  }
+	@Delete(":id")
+	remove(@Param("id") id: string) {
+		return this.bankAccountsService.remove(+id);
+	}
 }

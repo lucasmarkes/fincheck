@@ -1,26 +1,43 @@
-import { Injectable } from '@nestjs/common';
-import { CreateBankAccountDto } from './dto/create-bank-account.dto';
-import { UpdateBankAccountDto } from './dto/update-bank-account.dto';
+import { Injectable } from "@nestjs/common";
+import { BankAccountsRepository } from "src/shared/database/repositories/bank-accounts.repositories";
+import { CreateBankAccountDto } from "./dto/create-bank-account.dto";
+import { UpdateBankAccountDto } from "./dto/update-bank-account.dto";
 
 @Injectable()
 export class BankAccountsService {
-  create(createBankAccountDto: CreateBankAccountDto) {
-    return 'This action adds a new bankAccount';
-  }
+	constructor(private readonly bankAccountsRepo: BankAccountsRepository) {}
 
-  findAll() {
-    return `This action returns all bankAccounts`;
-  }
+	create(userId: string, createBankAccountDto: CreateBankAccountDto) {
+		const { name, initialBalance, type, color } = createBankAccountDto;
 
-  findOne(id: number) {
-    return `This action returns a #${id} bankAccount`;
-  }
+		return this.bankAccountsRepo.create({
+			data: {
+				userId,
+				name,
+				initialBalance,
+				type,
+				color,
+			},
+		});
+	}
 
-  update(id: number, updateBankAccountDto: UpdateBankAccountDto) {
-    return `This action updates a #${id} bankAccount`;
-  }
+	findAllByUserId(userId: string) {
+		return this.bankAccountsRepo.findMany({
+			where: {
+				userId,
+			},
+		});
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} bankAccount`;
-  }
+	findOne(id: number) {
+		return `This action returns a #${id} bankAccount`;
+	}
+
+	update(id: number, updateBankAccountDto: UpdateBankAccountDto) {
+		return `This action updates a #${id} bankAccount`;
+	}
+
+	remove(id: number) {
+		return `This action removes a #${id} bankAccount`;
+	}
 }
