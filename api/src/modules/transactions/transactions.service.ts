@@ -1,18 +1,22 @@
 import { Injectable } from "@nestjs/common";
 import { TransactionsRepository } from "src/shared/database/repositories/transactions.repositories";
+import { ValidateBankAccountOwnershipService } from "../bank-accounts/services/validate-bank-account-ownership.service";
 import { CreateTransactionDto } from "./dto/create-transaction.dto";
 import { UpdateTransactionDto } from "./dto/update-transaction.dto";
 
 @Injectable()
 export class TransactionsService {
-	constructor(private readonly transactionsRepo: TransactionsRepository) {}
+	constructor(
+		private readonly transactionsRepo: TransactionsRepository,
+		private readonly validateBankAccountOwnershipService: ValidateBankAccountOwnershipService,
+	) {}
 
-	create(createTransactionDto: CreateTransactionDto) {
-		return this.transactionsRepo.create({
-			data: {
-				...createTransactionDto,
-			},
-		});
+	async create(userId: string, createTransactionDto: CreateTransactionDto) {
+		const { bankAccountId } = createTransactionDto;
+		await this.validateBankAccountOwnershipService.validate(
+			userId,
+			bankAccountId,
+		);
 	}
 
 	findAllByUserId(userId: string) {
