@@ -9,6 +9,7 @@ import {
 	ParseUUIDPipe,
 	Post,
 	Put,
+	Query,
 } from "@nestjs/common";
 import { ActiveUserId } from "src/shared/decorators/ActiveUserId";
 import { CreateTransactionDto } from "./dto/create-transaction.dto";
@@ -27,8 +28,13 @@ export class TransactionsController {
 	}
 
 	@Get()
-	findAll(@ActiveUserId() userId: string) {
-		return this.transactionsService.findAllByUserId(userId);
+	findAll(
+		@ActiveUserId() userId: string,
+		@Query('month') month: number,
+		@Query('year') year: number,
+	) {
+		console.log(month, year);
+		return this.transactionsService.findAllByUserId(userId, { month, year });
 	}
 
 	@Put(":transactionId")
