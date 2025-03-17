@@ -24,7 +24,8 @@
         "useSelfClosingElements": "off"
       },
       "a11y": {
-        "useAltText": "off"
+        "useAltText": "off",
+        "noSvgWithoutTitle": "off"
       }
 		}
 	},
