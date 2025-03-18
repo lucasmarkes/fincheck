@@ -11,7 +11,8 @@
 	},
 	"formatter": {
 		"enabled": true,
-		"indentStyle": "tab"
+		"indentStyle": "tab",
+    "lineWidth": 80
 	},
 	"organizeImports": {
 		"enabled": true
@@ -25,7 +26,11 @@
       },
       "a11y": {
         "useAltText": "off",
-        "noSvgWithoutTitle": "off"
+        "noSvgWithoutTitle": "off",
+        "noLabelWithoutControl": "off"
+      },
+      "suspicious": {
+        "noEmptyInterface": "off"
       }
 		}
 	},
