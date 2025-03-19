@@ -31,23 +31,15 @@ export function Login() {
 				<Input
 					type="email"
 					placeholder="E-mail"
-					error="Informe o email"
+					error={errors.email?.message}
 					{...register("email")}
 				/>
-				{/* {errors.email && (
-					<span className="text-red-500 text-sm">{errors.email.message}</span>
-				)} */}
 				<Input
 					type="password"
 					placeholder="Senha"
-					error="Informe a senha"
+					error={errors.password?.message}
 					{...register("password")}
 				/>
-				{/* {errors.password && (
-					<span className="text-red-500 text-sm">
-						{errors.password.message}
-					</span>
-				)} */}
 				<Button type="submit" label="Entrar" className="mt-2" />
 			</form>
 		</>
