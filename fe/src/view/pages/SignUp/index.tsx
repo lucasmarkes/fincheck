@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
-import { useRegisterController } from "./useRegisterController";
+import { useSignUpController } from "./useSignUpController";
 
 export function SignUp() {
-	const { register, handleSubmit, errors } = useRegisterController();
+	const { register, handleSubmit, errors } = useSignUpController();
 	return (
 		<>
 			<header className="flex flex-col gap-4 items-center text-center">

@@ -13,7 +13,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export function useRegisterController() {
+export function useSignUpController() {
 	const {
 		register,
 		handleSubmit: hookFormHandleSubmit,
