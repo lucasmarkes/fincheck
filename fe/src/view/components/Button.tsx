@@ -1,5 +1,6 @@
 import type { ComponentProps } from "react";
 import { cn } from "../../utils/cn";
+import { Spinner } from "./Spinner";
 
 interface ButtonProps extends ComponentProps<"button"> {
 	type?: "submit" | "button" | "reset";
@@ -21,11 +22,12 @@ export function Button({
 			type={type}
 			disabled={disabled || isPending}
 			className={cn(
-				"bg-teal-800 hover:bg-teal-900 disabled:bg-gray-400 disabled:cursor-not-allowed px-6 h-12 rounded-2xl font-medium text-white transition-all hover:cursor-pointer",
+				"bg-teal-900 hover:bg-teal-800 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:text-gray-400 px-6 h-12 rounded-2xl font-medium text-white! transition-all hover:cursor-pointer flex items-center justify-center",
 				className,
 			)}
 		>
-			{label}
+			{!isPending && label}
+			{isPending && <Spinner />}
 		</button>
 	);
 }
