@@ -20,7 +20,7 @@ type FormData = z.infer<typeof schema>;
 export function useSignUpController() {
 	const {
 		register,
-		handleSubmit: hookFormHandleSubmit,
+		handleSubmit: hookFormSubmit,
 		formState: { errors },
 	} = useForm<FormData>({
 		resolver: zodResolver(schema),
@@ -33,7 +33,7 @@ export function useSignUpController() {
 		},
 	});
 
-	const handleSubmit = hookFormHandleSubmit(async (data) => {
+	const handleSubmit = hookFormSubmit(async (data) => {
 		try {
 			const { accessToken } = await mutateAsync(data);
 			toast.success("Conta criada com sucesso!");
