@@ -4,7 +4,8 @@ import { Input } from "../../components/Input";
 import { useSignUpController } from "./useSignUpController";
 
 export function SignUp() {
-	const { register, handleSubmit, errors } = useSignUpController();
+	const { register, handleSubmit, errors, isPending } = useSignUpController();
+
 	return (
 		<>
 			<header className="flex flex-col gap-4 items-center text-center">
@@ -42,7 +43,12 @@ export function SignUp() {
 					{...register("password")}
 					error={errors.password?.message}
 				/>
-				<Button type="submit" label="Criar conta" className="mt-2" />
+				<Button
+					type="submit"
+					label="Criar conta"
+					className="mt-2"
+					isPending={isPending}
+				/>
 			</form>
 		</>
 	);
