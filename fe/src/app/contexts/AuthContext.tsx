@@ -2,6 +2,8 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import { localStorageKeys } from "../config/localStorageKeys";
 import { useQuery } from "@tanstack/react-query";
 import { usersService } from "../services/usersService";
+import toast from "react-hot-toast";
+
 interface AuthContextValue {
 	signedIn: boolean;
 	signin: (accessToken: string) => void;
@@ -38,6 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 	useEffect(() => {
 		if (isError) {
+			toast.error("Your session has expired. Please sign in again.");
 			signout();
 		}
 	}, [isError, signout]);
