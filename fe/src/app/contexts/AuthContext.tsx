@@ -3,6 +3,7 @@ import { localStorageKeys } from "../config/localStorageKeys";
 import { useQuery } from "@tanstack/react-query";
 import { usersService } from "../services/usersService";
 import toast from "react-hot-toast";
+import { Loader } from "../../view/components/Loader";
 
 interface AuthContextValue {
 	signedIn: boolean;
@@ -21,10 +22,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		return !!storedAccessToken;
 	});
 
-	const { isError } = useQuery({
+	const { isError, isSuccess, isFetching } = useQuery({
 		queryKey: ["users", "me"],
 		queryFn: () => usersService.me(),
 		enabled: signedIn,
+		staleTime: Number.POSITIVE_INFINITY,
 	});
 
 	const signin = useCallback((accessToken: string) => {
@@ -40,13 +42,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 	useEffect(() => {
 		if (isError) {
-			toast.error("Your session has expired. Please sign in again.");
+			toast.error("Sua sessão expirou. Faça login novamente.");
 			signout();
 		}
 	}, [isError, signout]);
 
+	if (isFetching) {
+		return <Loader />;
+	}
+
 	return (
-		<AuthContext.Provider value={{ signedIn, signin, signout }}>
+		<AuthContext.Provider
+			value={{ signedIn: isSuccess && signedIn, signin, signout }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);
