@@ -41,7 +41,6 @@ export function useLoginController() {
 			const { accessToken } = await mutateAsync(data);
 			toast.success("Usuário logado com sucesso!");
 			signin(accessToken);
-			console.log(accessToken);
 		} catch {
 			toast.error("Ocorreu um erro ao entrar em sua conta.");
 		}
