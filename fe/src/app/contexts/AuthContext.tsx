@@ -47,15 +47,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		}
 	}, [isError, signout]);
 
-	if (isFetching) {
-		return <Loader />;
-	}
-
 	return (
 		<AuthContext.Provider
 			value={{ signedIn: isSuccess && signedIn, signin, signout }}
 		>
-			{children}
+			<Loader isLoading={isFetching} />
+			{!isFetching && children}
 		</AuthContext.Provider>
 	);
 }
