@@ -1,9 +1,8 @@
-import { Category } from '../../../../shared/entities/category';
+import type { Category } from '../../../../shared/entities/category';
 import { iconsMap } from './iconsMap';
 
 interface CategoryIconProps {
   type: 'income' | 'expense';
-
   category?: Category;
 }
 
@@ -18,7 +17,7 @@ export function CategoryIcon({ type, category }: CategoryIconProps) {
       ] ?? iconsMap[type].default;
 
     return <Icon />;
-  } else {
+  }
     return (
       <img
         src={category.iconUrl}
@@ -26,5 +25,4 @@ export function CategoryIcon({ type, category }: CategoryIconProps) {
         className="w-11 h-11"
       />
     );
-  }
 }
