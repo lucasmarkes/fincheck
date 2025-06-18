@@ -1,5 +1,5 @@
-import { formatCurrency } from "../../utils/formatCurrency";
-import { BankAccountTypeIcon } from "./icons/BankAccountTypeIcon";
+import { formatCurrency } from "../../../../../utils/formatCurrency";
+import { BankAccountTypeIcon } from "../../../../components/icons/BankAccountTypeIcon";
 
 interface AccountCardProps {
 	color: string;
